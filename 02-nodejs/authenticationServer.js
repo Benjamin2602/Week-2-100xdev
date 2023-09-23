@@ -30,8 +30,44 @@
  */
 
 const express = require("express")
-const PORT = 3000;
+// var bodyParser = require("body-parser");
+const port = 3000;
 const app = express();
 // write your logic here, DONT WRITE app.listen(3000) when you're running tests, the tests will automatically start the server
+// app.use(bodyParser.json());
+var users = [];
+
+app.use(express.json());
+
+function userSignUp(req,res){
+  console.log(req.body);
+  var user = req.body;
+  let userAlreadyExists = false;
+  for(var i = 0; i<users.length; i++){
+    if(users[i].name === userAlreadyExists){
+      userAlreadyExists = true;
+      break;
+    }if (userAlreadyExists) {
+      res.sendStatus(400);
+    } else {
+      users.push(user);
+      res.status(201).send("Signup successful");
+    }
+  }
+
+}
+
+function userLogin(req,res){
+
+  
+  
+}
+
+app.post('/signup', userSignUp)
+app.post('/login', userLogin)
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
 
 module.exports = app;
